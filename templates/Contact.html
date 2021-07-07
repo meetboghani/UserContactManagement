@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.contact .info {
+  width: 100%;
+}
+
+.contact .info i {
+  font-size: 20px;
+  float: left;
+  width: 44px;
+  height: 44px;
+  background: #cda45e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
+}
+
+.contact .info h4 {
+  padding: 0 0 0 60px;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  font-family: "Poppins", sans-serif;
+}
+
+.contact .info p {
+  padding: 0 0 0 60px;
+  margin-bottom: 0;
+  font-size: 14px;
+  color: #bab3a6;
+}
+
+.contact .info .open-hours, .contact .info .email, .contact .info .phone {
+  margin-top: 40px;
+}
+
+.contact .email-form {
+  width: 100%;
+}
+
+.contact .email-form .form-group {
+  padding-bottom: 8px;
+}
+
+.contact .email-form .validate {
+  display: none;
+  color: red;
+  margin: 0 0 15px 0;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.contact .email-form .error-message {
+  display: none;
+  color: #fff;
+  background: #ed3c0d;
+  text-align: center;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.contact .email-form .sent-message {
+  display: none;
+  color: #fff;
+  background: #18d26e;
+  text-align: center;
+  padding: 15px;
+  font-weight: 600;
+}
+
+
+.contact .email-form input, .contact .email-form textarea {
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 14px;
+  border-color: #625b4b;
+  color: white;
+}
+
+.contact .email-form input::-webkit-input-placeholder, .contact .email-form textarea::-webkit-input-placeholder {
+  color: #a49b89;
+}
+
+.contact .email-form input::-moz-placeholder, .contact .email-form textarea::-moz-placeholder {
+  color: #a49b89;
+}
+
+.contact .email-form input::placeholder, .contact .email-form textarea::placeholder {
+  color: #a49b89;
+}
+
+.contact .email-form input:focus, .contact .email-form textarea:focus {
+  border-color: #cda45e;
+}
+
+.contact .email-form input {
+    
+  height: 24px;
+  width: 380px;
+}
+.contact .email-form input[id="name"]
+{
+    margin-top: 50px;
+}
+.contact .email-form textarea {
+  padding: 10px 12px;
+  width: 380px;
+}
+
+.contact .email-form button[type="submit"] {
+  background: #cda45e;
+  border: 0;
+  padding: 10px 35px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 50px;
+}
+
+.contact .email-form button[type="submit"]:hover {
+  background: #d3af71;
+}
+
+.head a{
+			float: left;
+			list-style: none;
+			
+		}
+.head a{
+			display: inline-block;
+		}
+.head a{
+			text-decoration: none;
+			color: black;
+			padding: 5px 20px; 
+			border: 3px solid transparent;
+		}
+.head a:hover{
+			background-color: lightblue;
+			color: #000;
+        }
+
+
+
+</style>
+</head>
+<body>
+<div id="head">
+<a href="{% url 'About' %}">About us </a>
+
+    <a href="{% url 'contact' %}">Contact us </a> 
+
+    {% if request.user.is_authenticated and request.user.is_staff == False %}
+    
+    <a href="{% url 'profile' %}" >{{request.user.username}}</a>
+    <a href="{% url 'Logout' %}">Logout</a>
+  {% else %}
+        <a href="{% url 'Login' %}">Login</a>
+        <a href="{% url 'Signup' %}">Sign Up</a>
+
+
+    {% endif%}
+    </div>
+<section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Contact</h2>
+          <p>Contact Us</p>
+        </div>
+      </div>
+
+      <div data-aos="fade-up">
+        <iframe style="border:0; width: 100%; height: 350px;" src="https://maps.google.com/maps?q=hakkasan,%20mumbai&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" allowfullscreen></iframe>
+      </div>
+
+      <div class="container" data-aos="fade-up">
+
+        <div class="row mt-5">
+
+          <div class="col-lg-4">
+            <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p>2nd Floor, Krystal Building, Waterfield Road, 
+                  Bandra West, Mumbai, Maharashtra 400050</p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email:</h4>
+                <p><a href="mailto:meetcboghani02@gmail.com">Click to mail</a> on meetcboghani02@gmail.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Call:</h4>
+                <p><a href="tel:+91 9773002966">Click to call</a> on 9773002966</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0">
+
+            <form action="{% url 'contact_us' %}" method="POST" role="form" class="email-form">
+              {% csrf_token %}
+              {% if messages %}
+              
+                {% for message in messages %}
+                    {{message}}
+                {% endfor %}
+              
+            {% endif %}
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="client_name" class="form-control" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="client_email" id="email" placeholder="Your Email" required>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="client_message" rows="8" placeholder="Message" required></textarea>
+              </div>
+              
+              <div class="text-center"><button type="submit">Send Message</button></div>
+            </form>
+
+            
+          </div>
+
+          
+        </div>
+
+      </div>
+</body>
+</html>

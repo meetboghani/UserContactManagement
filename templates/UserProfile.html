@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+<form action='{% url 'uprofile'%}' method='post'>
+{% csrf_token %}
+{% for user1 in prof %}
+    {%if request.user.username == user1.user%}
+        <label> First Name</label>
+        <input type="text" name="fname" value="{{user1.first}}" required>
+        <label> Middle Name </label>
+        <input type="text" name="mname" value="{{user1.middle}}" required>
+        <label> Last Name</label>
+        <input type="text" name="lname" value="{{user1.last}}" required>
+        <label> Phone Number</label>
+        <input type="phone2numeric" name="phone" value="{{user1.phoneno}}" required>
+        <label> Email</label>
+        <input type="email" name="email" value="{{user1.email}}" required readonly> 
+        <label> UserName </label>
+        <input type="text" name="username" value="{{user1.user}}" required readonly>
+        <input type="submit" value="Update">
+    {%endif%}
+{%endfor%}
+</form>
+</body>
+</html>

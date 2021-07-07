@@ -1,0 +1,72 @@
+{% load static %}
+{% static "assets/img" as baseUrl %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <style>
+    
+
+    </style>
+</head>
+<body>
+    
+    <a href="{% url 'About' %}">About us </a>
+    <a href="{% url 'contact' %}">Contact us </a> 
+
+    {% if request.user.is_authenticated and request.user.is_staff == False %}
+    
+    <a href="{% url 'profile' %}" >{{request.user.username}}</a>
+    <a href="{% url 'Logout' %}">Logout</a>
+    <div class="container">
+		<!--  SEARCH FORM -->
+		<header class="header">
+			
+			<form action="/" method="GET" class="search-bar" id="search-form">
+                
+				<input type="search-name" class="contact-search" name="search-area" placeholder="Search" value{{search_input}}>
+                
+                <i onclick="document.getElementById('search-form').submit()"></i>
+                
+			</form>
+            
+			<!--  ADD-CONTACT BUTTON/ICON -->
+			<a href="{% url 'add-contact' %}">add</a>
+		</header>
+
+		<!--  CONTACT LIST -->
+		<section class="contacts-library">
+        {% for contact in contact %}
+            {% if contact.user_name == request.user.username %}
+			<ul class="contacts-list">
+				
+				<a href="{% url 'contactprofile' contact.id %}">
+					<div class="contact-section">
+						<li class="list__item">
+							<p class="contact-name">{{contact.full_name}}</p>
+						</li>
+
+					</div>
+				</a>
+                
+                </ul>
+
+            {%endif%}
+            {%empty%}
+                <h4>Contact not found with this name..</h4> 
+        {% endfor %}
+                
+		</section>
+	</div>
+
+    {% else %}
+        <a href="{% url 'Login' %}">Login</a>
+        <a href="{% url 'Signup' %}">Sign Up</a>
+
+
+    {% endif%}
+    
+    <h1> Welcome to home page</h1>
+</body>
+</html>

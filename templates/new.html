@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <header class="hero">
+			<a href="{% url 'Home' %}">
+				back
+			</a>
+	</header>
+<form action="{% url 'add-contact'%}" method='post'>
+{% csrf_token %}
+
+    
+<div class="container">
+    <label>Username</label>
+    <input name="username" value="{{request.user.username}}" readonly>
+    
+
+    <label for="uname"><b>Full Name</b></label>
+    <input type="text" placeholder="Enter Username" name="fullname" required>
+
+    <label for="psw"><b>Email</b></label>
+    <input type="email" placeholder="Enter Password" name="email" required>
+
+    <label for="psw"><b>Phone Number</b></label>
+    <input type="phone2numeric" placeholder="Enter Password" name="phonenumber" required>
+
+    <label for="psw"><b>Address</b></label>
+    <input type="text" placeholder="Enter Password" name="address" required>
+  
+    <button type="submit">Save Button</button>
+</div>
+</form>
+</body>
+</html>
